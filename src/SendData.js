@@ -1,5 +1,5 @@
 import React, {useState,useReducer} from 'react';
-import RecommendIcon from '@mui/icons-material/Recommend';
+import Alert from '@mui/material/Alert';
 
 function formReducer(state, event) {
     return {
@@ -10,21 +10,34 @@ function formReducer(state, event) {
 
 export default function SendData() {
     const [formData, setFormData] = useReducer(formReducer, {X:0,Y:0,Z:0});
-    const [seeGood, setSeeGood] = useState(false);
+    const [seeSent, setSeeSent] = useState(false);
+    const [error, setError] = useState('');
+
     async function send_data(){
-        return fetch(`http://mprojectsdb.gq/ProyectoRT/sendposition.php?X=${formData.X}&Y=${formData.Y}&Z=${formData.Z}`);
+        return fetch(`http://mprojectsdb.gq/ProyectoRT/sendposition.php?X=${formData.X}&Y=${formData.Y}&Z=${formData.Z}&T=${Math.round(Date.now() / 1000)}`);
+    }
+    async function getLastTime(){
+        return fetch('http://mprojectsdb.gq/ProyectoRT/getLastTime.php').then((res) => res.json());
     }
     async function handleSubmit(event){
         event.preventDefault();
-        console.log(JSON.stringify(formData));
-        setSeeGood(true);
-        setTimeout(()=>setSeeGood(false), 1000);
         try {
+            const lastTime = Number(await getLastTime());
+            if(Math.round(Date.now() / 1000) - lastTime < 6){
+                throw new Error('Wait some seconds between requests');
+            }
             const res = await send_data();
-            console.log(res);
             if (!res.ok) throw new Error();
+            setSeeSent(true);
+            setTimeout(()=>setSeeSent(false), 3000);
           } catch (err) {
-              console.log(err);
+              setSeeSent(false);
+              if(err.message == 'Wait some seconds between requests'){
+                  setError(err.message)
+              }else{
+                  setError("Couldn't send position");
+              }
+              setTimeout(()=>setError(''), 3000);
           }
     }
     function handleChange(event) {
@@ -53,7 +66,8 @@ export default function SendData() {
         <button className="blue-submit-button" type="submit">
           Send
         </button>
-        {seeGood && <div className='extra-link' style={{justifyContent:'center'}}><p>Sent!!</p><RecommendIcon/></div>}
+        {seeSent && <Alert severity="success">Position sent successfully!</Alert>}
+        {error && <Alert severity="error">{error}</Alert>}
       </form>
     </div>
   );

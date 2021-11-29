@@ -5,7 +5,7 @@ import Team from './Team';
 import Extra from './Extra';
 
 function App() {
-  const [windows, setWindows] = useState('team');
+  const [windows, setWindows] = useState('send-data');
   console.log(windows);
   return (
     <div className="App">

@@ -6,7 +6,7 @@ export default function Team() {
     <div className="form team">
       <h2>Team</h2>
       <h3>Project Name: </h3>
-      <p>Diseño de un manipulador robótico de tres grados de libertad basado en iot para reducir riesgos laborales en la distribución industrial de productos</p>
+      <p>Design of a robotic manipulator with three degrees of freedom based on IoT to reduce occupational risks in the industrial distribution of products</p>
       <h3>Members: </h3>
       <ol>
           <li>Campos Peña, Pável Axel Mc</li>
