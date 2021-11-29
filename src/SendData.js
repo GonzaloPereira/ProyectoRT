@@ -1,4 +1,5 @@
-import React, {useReducer} from 'react';
+import React, {useState,useReducer} from 'react';
+import RecommendIcon from '@mui/icons-material/Recommend';
 
 function formReducer(state, event) {
     return {
@@ -9,21 +10,15 @@ function formReducer(state, event) {
 
 export default function SendData() {
     const [formData, setFormData] = useReducer(formReducer, {X:0,Y:0,Z:0});
-
+    const [seeGood, setSeeGood] = useState(false);
     async function send_data(){
-        return fetch('http://mprojectsdb.gq/abet/sendposition.php', {
-            method: 'POST',
-            headers:{
-                'Access-Control-Allow-Origin':'*',
-                'Access-Control-Request-Methods':'POST'
-            },
-            mode:'cors',
-            body: JSON.stringify(formData),
-          });
+        return fetch(`http://mprojectsdb.gq/ProyectoRT/sendposition.php?X=${formData.X}&Y=${formData.Y}&Z=${formData.Z}`);
     }
     async function handleSubmit(event){
         event.preventDefault();
-        console.log(formData);
+        console.log(JSON.stringify(formData));
+        setSeeGood(true);
+        setTimeout(()=>setSeeGood(false), 1000);
         try {
             const res = await send_data();
             console.log(res);
@@ -58,6 +53,7 @@ export default function SendData() {
         <button className="blue-submit-button" type="submit">
           Send
         </button>
+        {seeGood && <div className='extra-link' style={{justifyContent:'center'}}><p>Sent!!</p><RecommendIcon/></div>}
       </form>
     </div>
   );
