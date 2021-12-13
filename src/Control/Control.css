@@ -1,8 +1,10 @@
 .control {
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 1fr 3fr;
   grid-auto-rows: 1fr;
   height: 100%;
+  align-items: center;
+  justify-items: center;
 }
 .receive-data {
   display: grid;
@@ -10,4 +12,6 @@
   grid-template-rows: 1fr 1fr;
   justify-items: center;
   align-items: center;
+  height: 100%;
+  width: 100%;
 }

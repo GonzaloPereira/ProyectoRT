@@ -43,15 +43,19 @@ body {
   grid-column: 1/5;
   background-color: white;
 }
-
+.center {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  padding-top: 3rem;
+}
 /* Form  */
-/* Sign up  */
 .form {
   display: flex;
   flex-direction: column;
-  width: 300px;
-  margin: auto;
-  margin-top: 4%;
+  width: 200px;
   max-width: 350px;
   min-width: 250px;
   border: 0px solid #393e46;
@@ -72,13 +76,6 @@ body {
   width: 100%;
   height: 2rem;
 }
-.form input[type="checkbox"] {
-  display: inline-block;
-  width: 20px;
-  margin-left: 10px;
-  position: relative;
-  top: 10px;
-}
 .blue-submit-button {
   display: block;
   text-align: center;
@@ -98,26 +95,18 @@ body {
 .form button:hover {
   cursor: pointer;
 }
-.form textarea {
-  box-sizing: border-box;
-  width: 100%;
-  height: 4rem;
-  resize: none;
-}
 .team {
-  text-align: left;
+  width: 500px;
+  height: 500px;
 }
 .team p {
-  text-align: justify;
+  margin-top: 0.3rem;
+  margin-bottom: 0.3rem;
 }
-.extra-link {
-  display: flex;
-  flex-direction: row;
-  align-self: center;
-  align-items: center;
-  gap: 10px;
+.team h2 {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
 }
-.extra-link:hover {
-  cursor: pointer;
-  opacity: 0.9;
+.extra {
+  height: 400px;
 }

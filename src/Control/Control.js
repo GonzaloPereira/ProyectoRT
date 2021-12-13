@@ -6,7 +6,8 @@ import "./Control.css";
 export default function Control() {
   return (
     <div className="control">
-      <SendData /> <ReceiveData />
+      <SendData />
+      <ReceiveData />
     </div>
   );
 }

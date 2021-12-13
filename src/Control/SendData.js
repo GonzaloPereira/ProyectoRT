@@ -1,5 +1,7 @@
 import React, { useState, useReducer } from "react";
 import Alert from "@mui/material/Alert";
+import { database } from "./firebase";
+import { ref, child, get, set } from "firebase/database";
 
 function formReducer(state, event) {
   return {
@@ -14,19 +16,22 @@ export default function SendData() {
   const [error, setError] = useState("");
 
   async function send_data() {
-    return fetch(
-      `http://mprojectsdb.gq/ProyectoRT/sendposition.php?X=${formData.X}&Y=${formData.Q}&Z=${0}&T=${Math.round(
-        Date.now() / 1000
-      )}`
-    );
+    return set(ref(database, "request/"), {
+      x: Number(formData.X),
+      q: Number(formData.Q),
+      t: Math.round(Date.now() / 1000),
+    });
   }
   async function getLastTime() {
-    return fetch("http://mprojectsdb.gq/ProyectoRT/getLastTime.php").then((res) => res.json());
+    const dbRef = ref(database);
+    return (await get(child(dbRef, "request/t"))).val();
   }
   async function handleSubmit(event) {
     event.preventDefault();
     try {
+      console.log(await getLastTime());
       const lastTime = Number(await getLastTime());
+      console.log(lastTime);
       if (Math.round(Date.now() / 1000) - lastTime < 8) {
         throw new Error("Wait some seconds between requests");
       }
@@ -34,7 +39,6 @@ export default function SendData() {
         throw new Error("Request out of range");
       }
       const res = await send_data();
-      if (!res.ok) throw new Error();
       setSeeSent(true);
       setTimeout(() => setSeeSent(false), 3000);
     } catch (err) {
@@ -55,7 +59,7 @@ export default function SendData() {
   }
 
   return (
-    <div className="form">
+    <div className="form send-data">
       <h2>Send position</h2>
       <p>Write position with the three cordinates axis</p>
       <form onSubmit={handleSubmit}>
