@@ -64,6 +64,14 @@ export default function SendData() {
     <div className="form send-data">
       <h2>Send position</h2>
       <p>Write position with the three cordinates axis</p>
+      <div style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
+        <button className="blue-submit-button" type="submit">
+          Stop Robot
+        </button>
+        <button className="blue-submit-button" type="submit">
+          Home Robot
+        </button>
+      </div>
       <form onSubmit={handleSubmit}>
         <label htmlFor="x-coordinate">
           <p>X-coordinate</p>
