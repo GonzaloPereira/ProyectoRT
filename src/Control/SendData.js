@@ -1,7 +1,7 @@
 import React, { useState, useReducer } from "react";
 import Alert from "@mui/material/Alert";
 import { database } from "./firebase";
-import { ref, child, get, set } from "firebase/database";
+import { ref, child, get, set, update } from "firebase/database";
 
 function formReducer(state, event) {
   return {
@@ -15,11 +15,15 @@ export default function SendData() {
   const [seeSent, setSeeSent] = useState(false);
   const [error, setError] = useState("");
 
-  async function send_data() {
-    return set(ref(database, "request/"), {
+  function send_data() {
+    set(ref(database, "request/"), {
       x: Number(formData.X),
       q: Number(formData.Q),
       t: Math.round(Date.now() / 1000),
+    });
+    update(ref(database, "charts/"), {
+      dx1: Number(formData.X),
+      dx2: Number(formData.Q),
     });
   }
   async function getLastTime() {
@@ -29,16 +33,14 @@ export default function SendData() {
   async function handleSubmit(event) {
     event.preventDefault();
     try {
-      console.log(await getLastTime());
       const lastTime = Number(await getLastTime());
-      console.log(lastTime);
       if (Math.round(Date.now() / 1000) - lastTime < 8) {
         throw new Error("Wait some seconds between requests");
       }
       if (formData.X < 0 || formData.X > 20 || formData.Q < 0 || formData.Q > 90) {
         throw new Error("Request out of range");
       }
-      const res = await send_data();
+      send_data();
       setSeeSent(true);
       setTimeout(() => setSeeSent(false), 3000);
     } catch (err) {

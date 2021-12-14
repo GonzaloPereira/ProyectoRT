@@ -2,10 +2,10 @@ import React from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 
-export default function ReceiveData({ x1, dx1, v1, x2, dx2, v2 }) {
+export default function ReceiveData({ x1, dx1, u1, x2, dx2, u2 }) {
   const optionsGeneral = {
     chart: {
-      type: "line",
+      type: "spline",
       animation: false,
       height: 250,
       width: 450,
@@ -15,11 +15,17 @@ export default function ReceiveData({ x1, dx1, v1, x2, dx2, v2 }) {
         marker: false,
       },
     },
+    xAxis: {
+      title: {
+        text: "Time",
+      },
+    },
+    credits: false,
   };
   const options1 = {
     ...optionsGeneral,
     title: {
-      text: "Junta 1",
+      text: "Position",
     },
     series: [
       {
@@ -28,16 +34,21 @@ export default function ReceiveData({ x1, dx1, v1, x2, dx2, v2 }) {
         color: "blue",
       },
       {
-        name: "Desired position",
+        name: "Set-point",
         data: dx1,
         color: "red",
       },
     ],
+    yAxis: {
+      title: {
+        text: "Position cm",
+      },
+    },
   };
   const options2 = {
     ...optionsGeneral,
     title: {
-      text: "Junta 2",
+      text: "Angular position",
     },
     series: [
       {
@@ -51,16 +62,21 @@ export default function ReceiveData({ x1, dx1, v1, x2, dx2, v2 }) {
         color: "red",
       },
     ],
+    yAxis: {
+      title: {
+        text: "Position °",
+      },
+    },
   };
   const options3 = {
     ...optionsGeneral,
     title: {
-      text: "Junta 1",
+      text: "Control signal",
     },
     series: [
       {
-        name: "Speed",
-        data: v1,
+        name: "Control signal",
+        data: u1,
         color: "green",
       },
     ],
@@ -68,12 +84,12 @@ export default function ReceiveData({ x1, dx1, v1, x2, dx2, v2 }) {
   const options4 = {
     ...optionsGeneral,
     title: {
-      text: "Junta 2",
+      text: "Control signal",
     },
     series: [
       {
-        name: "Speed",
-        data: v2,
+        name: "Control signal",
+        data: u2,
         color: "green",
       },
     ],
@@ -81,9 +97,11 @@ export default function ReceiveData({ x1, dx1, v1, x2, dx2, v2 }) {
   return (
     <div className="receive-data">
       <div className="chart">
+        <h2>Junta 1</h2>
         <HighchartsReact highcharts={Highcharts} options={options1} />
       </div>
       <div className="chart">
+        <h2>Junta 2</h2>
         <HighchartsReact highcharts={Highcharts} options={options2} />
       </div>
       <div className="chart">
