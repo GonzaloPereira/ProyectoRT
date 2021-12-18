@@ -29,3 +29,18 @@
 .chart h2 {
   margin-top: 0;
 }
+.animation1 {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.animation1 .img1 {
+  position: absolute;
+  top: 40px;
+  left: 100px;
+}
+.animation1 .img2 {
+  position: absolute;
+  top: 70px;
+}
+/* 120 to 280*/
