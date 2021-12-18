@@ -110,3 +110,37 @@ body {
 .extra {
   height: 400px;
 }
+.popup-out {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.6); /* Black w/ opacity */
+  overflow: auto;
+}
+.popup-in {
+  position: relative;
+  color: black;
+  border: 0px solid #393e46;
+  border-radius: 15px;
+  padding: 2rem 2.5rem 2.5rem 2.5rem;
+  background-color: #eeeeee;
+  margin: 10px;
+}
+.popup-close-icon {
+  position: absolute;
+  right: 0.5rem;
+  top: -1.5rem;
+  font-weight: 900;
+  font-size: 1.65rem;
+  color: red;
+}
+.popup-close-icon:hover,
+.popup-close-icon:focus {
+  opacity: 0.5;
+  text-decoration: none;
+  cursor: pointer;
+}

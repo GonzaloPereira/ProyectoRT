@@ -8,56 +8,116 @@ import { database } from "./firebase";
 export default function Control() {
   const array_zeros = Array(100).fill(0);
 
-  const [x1, set_x1] = useState(array_zeros);
-  const [dx1, set_dx1] = useState(array_zeros);
-  const [u1, set_u1] = useState(array_zeros);
+  const [P1, set_P1] = useState(array_zeros);
+  const [SP1, set_SP1] = useState(array_zeros);
+  const [lastSP1, set_lastSP1] = useState(array_zeros);
+  const [U1, set_U1] = useState(array_zeros);
+  const [V1, set_V1] = useState(array_zeros);
+  const [E1, set_E1] = useState(array_zeros);
+  const [T1, set_T1] = useState(array_zeros);
 
-  const [x2, set_x2] = useState(array_zeros);
-  const [dx2, set_dx2] = useState(array_zeros);
-  const [u2, set_u2] = useState(array_zeros);
+  const [P2, set_P2] = useState(array_zeros);
+  const [SP2, set_SP2] = useState(array_zeros);
+  const [lastSP2, set_lastSP2] = useState(array_zeros);
+  const [U2, set_U2] = useState(array_zeros);
+  const [V2, set_V2] = useState(array_zeros);
+  const [E2, set_E2] = useState(array_zeros);
+  const [T2, set_T2] = useState(array_zeros);
 
-  const x1_ref = ref(database, "charts/x1");
-  const dx1_ref = ref(database, "charts/dx1");
-  const u1_ref = ref(database, "charts/u1");
+  const P1_ref = ref(database, "charts/P1");
+  const SP1_ref = ref(database, "charts/SP1");
+  const U1_ref = ref(database, "charts/U1");
+  const V1_ref = ref(database, "charts/V1");
+  const E1_ref = ref(database, "charts/E1");
+  const T1_ref = ref(database, "charts/T1");
 
-  const x2_ref = ref(database, "charts/x2");
-  const dx2_ref = ref(database, "charts/dx2");
-  const u2_ref = ref(database, "charts/u2");
+  const P2_ref = ref(database, "charts/P2");
+  const SP2_ref = ref(database, "charts/SP2");
+  const U2_ref = ref(database, "charts/U2");
+  const V2_ref = ref(database, "charts/V2");
+  const E2_ref = ref(database, "charts/E2");
+  const T2_ref = ref(database, "charts/T2");
 
   useEffect(() => {
-    onValue(x1_ref, (snapshot) => {
-      set_x1((prev) => prev.slice(1));
-      set_x1((prev) => [...prev, snapshot.val()]);
+    set_SP1((prev) => prev.slice(1));
+    set_SP1((prev) => [...prev, lastSP1]);
+  }, [P1]);
+
+  useEffect(() => {
+    set_SP2((prev) => prev.slice(1));
+    set_SP2((prev) => [...prev, lastSP2]);
+  }, [P2]);
+
+  useEffect(() => {
+    onValue(P1_ref, (snapshot) => {
+      set_P1((prev) => prev.slice(1));
+      set_P1((prev) => [...prev, snapshot.val()]);
+
+      set_E1((prev) => prev.slice(1));
+      set_E1((prev) => [...prev, Math.abs(snapshot.val() - SP1[SP1.length - 1])]);
     });
 
-    onValue(dx1_ref, (snapshot) => {
-      set_dx1(() => Array(100).fill(snapshot.val()));
+    onValue(SP1_ref, (snapshot) => {
+      set_lastSP1(snapshot.val());
     });
 
-    onValue(u1_ref, (snapshot) => {
-      set_u1((prev) => prev.slice(1));
-      set_u1((prev) => [...prev, snapshot.val()]);
+    onValue(U1_ref, (snapshot) => {
+      set_U1((prev) => prev.slice(1));
+      set_U1((prev) => [...prev, snapshot.val()]);
     });
 
-    onValue(x2_ref, (snapshot) => {
-      set_x2((prev) => prev.slice(1));
-      set_x2((prev) => [...prev, snapshot.val()]);
+    onValue(V1_ref, (snapshot) => {
+      set_V1((prev) => prev.slice(1));
+      set_V1((prev) => [...prev, snapshot.val()]);
     });
 
-    onValue(dx2_ref, (snapshot) => {
-      set_dx2(() => Array(100).fill(snapshot.val()));
+    onValue(T1_ref, (snapshot) => {
+      set_T1((prev) => prev.slice(1));
+      set_T1((prev) => [...prev, snapshot.val()]);
     });
 
-    onValue(u2_ref, (snapshot) => {
-      set_u2((prev) => prev.slice(1));
-      set_u2((prev) => [...prev, snapshot.val()]);
+    onValue(P2_ref, (snapshot) => {
+      set_P2((prev) => prev.slice(1));
+      set_P2((prev) => [...prev, snapshot.val()]);
+    });
+
+    onValue(SP2_ref, (snapshot) => {
+      set_lastSP2(snapshot.val());
+    });
+
+    onValue(U2_ref, (snapshot) => {
+      set_U2((prev) => prev.slice(1));
+      set_U2((prev) => [...prev, snapshot.val()]);
+    });
+
+    onValue(V2_ref, (snapshot) => {
+      set_V2((prev) => prev.slice(1));
+      set_V2((prev) => [...prev, snapshot.val()]);
+    });
+
+    onValue(T2_ref, (snapshot) => {
+      set_T2((prev) => prev.slice(1));
+      set_T2((prev) => [...prev, snapshot.val()]);
     });
   }, []);
 
   return (
     <div className="control">
       <SendData />
-      <ReceiveData x1={x1} dx1={dx1} u1={u1} x2={x2} dx2={dx2} u2={u2} />
+      <ReceiveData
+        P1={P1}
+        SP1={SP1}
+        U1={U1}
+        V1={V1}
+        E1={E1}
+        T1={T1}
+        P2={P2}
+        SP2={SP2}
+        U2={U2}
+        V2={V2}
+        E2={E2}
+        T2={T2}
+      />
     </div>
   );
 }

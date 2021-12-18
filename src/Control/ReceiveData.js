@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
+import FullCharts from "./FullCharts";
 
-export default function ReceiveData({ x1, dx1, u1, x2, dx2, u2 }) {
+export default function ReceiveData({ P1, SP1, U1, V1, E1, T1, P2, SP2, U2, V2, E2, T2 }) {
   const optionsGeneral = {
     chart: {
       type: "spline",
@@ -30,12 +31,12 @@ export default function ReceiveData({ x1, dx1, u1, x2, dx2, u2 }) {
     series: [
       {
         name: "Actual position",
-        data: x1,
+        data: P1,
         color: "blue",
       },
       {
         name: "Set-point",
-        data: dx1,
+        data: SP1,
         color: "red",
       },
     ],
@@ -53,12 +54,12 @@ export default function ReceiveData({ x1, dx1, u1, x2, dx2, u2 }) {
     series: [
       {
         name: "Actual position",
-        data: x2,
+        data: P2,
         color: "blue",
       },
       {
         name: "Desired position",
-        data: dx2,
+        data: SP2,
         color: "red",
       },
     ],
@@ -76,7 +77,7 @@ export default function ReceiveData({ x1, dx1, u1, x2, dx2, u2 }) {
     series: [
       {
         name: "Control signal",
-        data: u1,
+        data: U1,
         color: "green",
       },
     ],
@@ -89,27 +90,40 @@ export default function ReceiveData({ x1, dx1, u1, x2, dx2, u2 }) {
     series: [
       {
         name: "Control signal",
-        data: u2,
+        data: U2,
         color: "green",
       },
     ],
   };
+  const [openFirst, setOpenFirst] = useState(false);
+  const [openSecond, setOpenSecond] = useState(false);
+
   return (
     <div className="receive-data">
       <div className="chart">
-        <h2>Junta 1</h2>
+        <h2>Motor 1</h2>
         <HighchartsReact highcharts={Highcharts} options={options1} />
       </div>
       <div className="chart">
-        <h2>Junta 2</h2>
+        <h2>Motor 2</h2>
         <HighchartsReact highcharts={Highcharts} options={options2} />
       </div>
       <div className="chart">
         <HighchartsReact highcharts={Highcharts} options={options3} />
+        <button className="blue-submit-button" style={{ width: "50%" }} onClick={() => setOpenFirst(true)}>
+          Open full data
+        </button>
       </div>
       <div className="chart">
         <HighchartsReact highcharts={Highcharts} options={options4} />
+        <button className="blue-submit-button" style={{ width: "50%" }} onClick={() => setOpenSecond(true)}>
+          Open full data
+        </button>
       </div>
+      {openFirst && <FullCharts P={P1} SP={SP1} U={U1} V={V1} E={E1} T={T1} close={() => setOpenFirst(false)} N={1} />}
+      {openSecond && (
+        <FullCharts P={P2} SP={SP2} U={U2} V={V2} E={E2} T={T2} close={() => setOpenSecond(false)} N={2} />
+      )}
     </div>
   );
 }
