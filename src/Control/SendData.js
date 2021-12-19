@@ -34,7 +34,7 @@ export default function SendData() {
     event.preventDefault();
     try {
       const lastTime = Number(await getLastTime());
-      if (Math.round(Date.now() / 1000) - lastTime < 8) {
+      if (Math.abs(Math.round(Date.now() / 1000) - lastTime < 5)) {
         throw new Error("Wait some seconds between requests");
       }
       if (formData.X < 0 || formData.X > 20 || formData.Q < 0 || formData.Q > 90) {
