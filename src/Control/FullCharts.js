@@ -114,8 +114,8 @@ export default function FullCharts({ P, SP, U, V, E, T, close, N }) {
           </div>
         ) : (
           <div className="animation2">
-            <img className="img1" src={base2} />
-            <img className="img2" src={eje2} />
+            <img className="img1" />
+            <img className="img2" />
           </div>
         )}
         <div className="chart">

@@ -24,6 +24,7 @@ export default function Control() {
   const [E2, set_E2] = useState(array_zeros);
   const [T2, set_T2] = useState(array_zeros);
 
+  //const X_ref = ref(database, "charts/X");
   const P1_ref = ref(database, "charts/P1");
   const SP1_ref = ref(database, "charts/SP1");
   const U1_ref = ref(database, "charts/U1");
@@ -37,6 +38,59 @@ export default function Control() {
   const V2_ref = ref(database, "charts/V2");
   const E2_ref = ref(database, "charts/E2");
   const T2_ref = ref(database, "charts/T2");
+
+  // function value(s) {
+  //   let a = s[0] - "!";
+  //   let b = s[1] - "!";
+  //   let c = s[2] - "!";
+  //   return (c * 84 * 84 + b * 84 + a) / 100.0;
+  // }
+  // function updateData(string) {
+  //   const P1_val = value(string.splice(0, 2));
+  //   set_SP1((prev) => prev.slice(1));
+  //   set_SP1((prev) => [...prev, P1_val]);
+
+  //   const P2_val = value(string.splice(3, 5));
+  //   set_P2((prev) => prev.slice(1));
+  //   set_P2((prev) => [...prev, P2_val]);
+
+  //   const SP1_val = value(string.splice(6, 8));
+  //   set_SP1((prev) => prev.slice(1));
+  //   set_SP1((prev) => [...prev, SP1_val]);
+
+  //   const SP2_val = value(string.splice(9, 11));
+  //   set_SP2((prev) => prev.slice(1));
+  //   set_SP2((prev) => [...prev, SP2_val]);
+
+  //   const T1_val = value(string.splice(12, 14));
+  //   set_T1((prev) => prev.slice(1));
+  //   set_T1((prev) => [...prev, T1_val]);
+
+  //   const T2_val = value(string.splice(15, 17));
+  //   set_T2((prev) => prev.slice(1));
+  //   set_T2((prev) => [...prev, T2_val]);
+
+  //   const U1_val = value(string.splice(18, 20));
+  //   set_U1((prev) => prev.slice(1));
+  //   set_U1((prev) => [...prev, U1_val]);
+
+  //   const U2_val = value(string.splice(21, 23));
+  //   set_U2((prev) => prev.slice(1));
+  //   set_U2((prev) => [...prev, U2_val]);
+
+  //   const V1_val = value(string.splice(24, 26));
+  //   set_V1((prev) => prev.slice(1));
+  //   set_V1((prev) => [...prev, V1_val]);
+
+  //   const V2_val = value(string.splice(27, 29));
+  //   set_V2((prev) => prev.slice(1));
+  //   set_V2((prev) => [...prev, V2_val]);
+  // }
+  // useEffect(() => {
+  //   onValue(X_ref, (snapshot) => {
+  //     updateData(snapshot.val());
+  //   });
+  // }, []);
 
   useEffect(() => {
     set_SP1((prev) => prev.slice(1));

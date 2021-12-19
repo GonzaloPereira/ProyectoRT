@@ -21,10 +21,10 @@ export default function SendData() {
       q: Number(formData.Q),
       t: Math.round(Date.now() / 1000),
     });
-    update(ref(database, "charts/"), {
-      dx1: Number(formData.X),
-      dx2: Number(formData.Q),
-    });
+    // update(ref(database, "charts/"), {
+    //   dx1: Number(formData.X),
+    //   dx2: Number(formData.Q),
+    // });
   }
   async function getLastTime() {
     const dbRef = ref(database);
